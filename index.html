@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zain Fashion Center</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { padding-top: 70px; }
+    .product-card { transition: transform 0.2s; }
+    .product-card:hover { transform: scale(1.05); }
+    footer { background: #222; color: #fff; padding: 20px 0; text-align: center; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="https://via.placeholder.com/150x50?text=Zain+Fashion+Center" alt="Zain Fashion Center Logo" class="img-fluid">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#women">Women</a></li>
+          <li class="nav-item"><a class="nav-link" href="#shoes">Shoes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#jewelry">Jewelry</a></li>
+          <li class="nav-item"><a class="nav-link" href="#watches">Watches</a></li>
+        </ul>
+        <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#cartModal">
+          Cart (<span id="cart-count">0</span>)
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="bg-light text-center py-5">
+    <h1 class="display-4">Welcome to Zain Fashion Center</h1>
+    <p class="lead">Trendy Clothes, Elegant Shoes, Luxury Jewelry & Premium Watches</p>
+  </header>
+
+  <main class="container my-4">
+    <!-- Women -->
+    <section id="women" class="my-5">
+      <h2 class="mb-4">Women Collection</h2>
+      <div class="row g-4" id="women-products"></div>
+    </section>
+
+    <!-- Shoes -->
+    <section id="shoes" class="my-5">
+      <h2 class="mb-4">Shoes</h2>
+      <div class="row g-4" id="shoes-products"></div>
+    </section>
+
+    <!-- Jewelry -->
+    <section id="jewelry" class="my-5">
+      <h2 class="mb-4">Jewelry</h2>
+      <div class="row g-4" id="jewelry-products"></div>
+    </section>
+
+    <!-- Watches -->
+    <section id="watches" class="my-5">
+      <h2 class="mb-4">Watches</h2>
+      <div class="row g-4" id="watches-products"></div>
+    </section>
+  </main>
+
+  <!-- Cart Modal -->
+  <div class="modal fade" id="cartModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Your Cart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group" id="cart-items"></ul>
+          <div class="mt-3">
+            <h5>Total: $<span id="cart-total">0</span></h5>
+          </div>
+          <div class="mt-3">
+            <label for="payment-method" class="form-label">Select Payment Method</label>
+            <select class="form-select" id="payment-method">
+              <option value="Cash on Delivery">Cash on Delivery</option>
+              <option value="Mobile Money">Mobile Money</option>
+              <option value="Card Payment">Card Payment</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-success" id="checkoutBtn">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Zain Fashion Center. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const products = {
+      women: [
+        { name: "Elegant Red Dress", price: 59, img: "https://via.placeholder.com/300x200?text=Red+Dress" },
+        { name: "Summer Maxi Dress", price: 49, img: "https://via.placeholder.com/300x200?text=Maxi+Dress" },
+        { name: "Formal Blazer", price: 79, img: "https://via.placeholder.com/300x200?text=Blazer" },
+        { name: "Casual Top", price: 29, img: "https://via.placeholder.com/300x200?text=Top" },
+        { name: "Skinny Jeans", price: 45, img: "https://via.placeholder.com/300x200?text=Jeans" },
+        { name: "Floral Skirt", price: 39, img: "https://via.placeholder.com/300x200?text=Skirt" },
+        { name: "Office Shirt", price: 35, img: "https://via.placeholder.com/300x200?text=Shirt" },
+        { name: "Party Gown", price: 120, img: "https://via.placeholder.com/300x200?text=Gown" },
+        { name: "Knitted Sweater", price: 55, img: "https://via.placeholder.com/300x200?text=Sweater" },
+        { name: "Casual Jacket", price: 65, img: "https://via.placeholder.com/300x200?text=Jacket" },
+      ],
+      shoes: [
+        { name: "Classic Heels", price: 75, img: "https://via.placeholder.com/300x200?text=Heels" },
+        { name: "Running Sneakers", price: 90, img: "https://via.placeholder.com/300x200?text=Sneakers" },
+        { name: "Leather Boots", price: 110, img: "https://via.placeholder.com/300x200?text=Boots" },
+        { name: "Sandals", price: 35, img: "https://via.placeholder.com/300x200?text=Sandals" },
+        { name: "Formal Shoes", price: 95, img: "https://via.placeholder.com/300x200?text=Formal+Shoes" },
+        { name: "Loafers", price: 80, img: "https://via.placeholder.com/300x200?text=Loafers" },
+        { name: "Ankle Boots", price: 120, img: "https://via.placeholder.com/300x200?text=Ankle+Boots" },
+        { name: "Flip Flops", price: 25, img: "https://via.placeholder.com/300x200?text=Flip+Flops" },
+        { name: "Ballet Flats", price: 50, img: "https://via.placeholder.com/300x200?text=Flats" },
+        { name: "High-top Sneakers", price: 100, img: "https://via.placeholder.com/300x200?text=High+Top" },
+      ],
+      jewelry: [
+        { name: "Diamond Necklace", price: 250, img: "https://via.placeholder.com/300x200?text=Diamond+Necklace" },
+        { name: "Gold Chain", price: 180, img: "https://via.placeholder.com/300x200?text=Gold+Chain" },
+        { name: "Pearl Earrings", price: 95, img: "https://via.placeholder.com/300x200?text=Earrings" },
+        { name: "Silver Bracelet", price: 75, img: "https://via.placeholder.com/300x200?text=Bracelet" },
+        { name: "Choker Necklace", price: 60, img: "https://via.placeholder.com/300x200?text=Choker" },
+        { name: "Crystal Pendant", price: 70, img: "https://via.placeholder.com/300x200?text=Pendant" },
+        { name: "Luxury Set", price: 350, img: "https://via.placeholder.com/300x200?text=Luxury+Set" },
+        { name: "Fashion Ring", price: 40, img: "https://via.placeholder.com/300x200?text=Ring" },
+        { name: "Platinum Necklace", price: 420, img: "https://via.placeholder.com/300x200?text=Platinum+Necklace" },
+        { name: "Charm Bracelet", price: 55, img: "https://via.placeholder.com/300x200?text=Charm+Bracelet" },
+      ],
+      watches: [
+        { name: "Luxury Gold Watch", price: 500, img: "https://via.placeholder.com/300x200?text=Gold+Watch" },
+        { name: "Smart Watch", price: 220, img: "https://via.placeholder.com/300x200?text=Smart+Watch" },
+        { name: "Classic Silver Watch", price: 180, img: "https://via.placeholder.com/300x200?text=Silver+Watch" },
+        { name: "Leather Strap Watch", price: 150, img: "https://via.placeholder.com/300x200?text=Leather+Watch" },
+        { name: "Sports Watch", price: 130, img: "https://via.placeholder.com/300x200?text=Sports+Watch" },
+        { name: "Diamond Watch", price: 750, img: "https://via.placeholder.com/300x200?text=Diamond+Watch" },
+        { name: "Minimalist Watch", price: 95, img: "https://via.placeholder.com/300x200?text=Minimalist+Watch" },
+        { name: "Chronograph Watch", price: 210, img: "https://via.placeholder.com/300x200?text=Chronograph" },
+        { name: "Rose Gold Watch", price: 330, img: "https://via.placeholder.com/300x200?text=Rose+Gold+Watch" },
+        { name: "Digital Watch", price: 85, img: "https://via.placeholder.com/300x200?text=Digital+Watch" },
+      ],
+    };
+
+    let cart = [];
+
+    function renderProducts() {
+      for (const [category, items] of Object.entries(products)) {
+        const container = document.getElementById(`${category}-products`);
+        items.forEach((p, i) => {
+          const col = document.createElement("div");
+          col.className = "col-md-3";
+          col.innerHTML = `
+            <div class="card product-card h-100">
+              <img src="${p.img}" class="card-img-top" alt="${p.name}">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${p.name}</h5>
+                <p class="card-text">$${p.price}</p>
+                <button class="btn btn-primary mt-auto" onclick="addToCart('${category}', ${i})">Add to Cart</button>
+              </div>
+            </div>
+          `;
+          container.appendChild(col);
+        });
+      }
+    }
+
+    function addToCart(category, index) {
+      const product = products[category][index];
+      cart.push(product);
+      updateCart();
+    }
+
+    function updateCart() {
+      document.getElementById("cart-count").textContent = cart.length;
+      const list = document.getElementById("cart-items");
+      list.innerHTML = "";
+      let total = 0;
+      cart.forEach((item, i) => {
+        total += item.price;
+        list.innerHTML += `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            ${item.name} - $${item.price}
+            <button class="btn btn-sm btn-danger" onclick="removeFromCart(${i})">Remove</button>
+          </li>
+        `;
+      });
+      document.getElementById("cart-total").textContent = total.toFixed(2);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      const payment = document.getElementById("payment-method").value;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("payment", payment);
+      cart = [];
+      updateCart();
+      window.location.href = "confirmation.html";
+    });
+
+    renderProducts();
+  </script>
+</body>
+</html>
